@@ -4,7 +4,9 @@ from dotenv import load_dotenv
 from datetime import datetime
 import time
 import pandas as pd
-import phonenumbers
+
+from utils import clean_number
+from utils import clean_website
 
 load_dotenv()
 api_key = os.getenv("SERPAPI_KEY")
@@ -17,17 +19,6 @@ while search_query == "":
 all_results = []
 start = 0
 MAX_START = 100
-
-def clean_number(number):
-    try:
-        parsed = phonenumbers.parse(str(number), "ZA")
-
-        if phonenumbers.is_valid_number(parsed):
-            return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.E164)
-        else:
-            return None
-    except Exception:
-        return None
 
 while start < MAX_START:
     params = {
@@ -66,10 +57,8 @@ details = []
 
 for place in all_results:
     title = place.get("title")
-    website = place.get("website")
-
-    # making sure that the number is a south african number and formatting it right
     phone = clean_number(place.get("phone"))
+    website = clean_website(place.get("website"))
 
     details.append([title, phone, website])
 
