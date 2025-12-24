@@ -18,6 +18,17 @@ all_results = []
 start = 0
 MAX_START = 100
 
+def clean_number(number):
+    try:
+        parsed = phonenumbers.parse(str(number), "ZA")
+
+        if phonenumbers.is_valid_number(parsed):
+            return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.E164)
+        else:
+            return None
+    except Exception:
+        return None
+
 while start < MAX_START:
     params = {
         "q": search_query,
@@ -58,17 +69,7 @@ for place in all_results:
     website = place.get("website")
 
     # making sure that the number is a south african number and formatting it right
-    phone = place.get("phone")
-
-    try:
-        parsed = phonenumbers.parse(str(phone), "ZA")
-
-        if phonenumbers.is_valid_number(parsed):
-            phone = phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.E164)
-        else:
-            phone = None
-    except Exception:
-        print("Invalid")
+    phone = clean_number(place.get("phone"))
 
     details.append([title, phone, website])
 
