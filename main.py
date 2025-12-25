@@ -11,10 +11,10 @@ from utils import create_session
 load_dotenv()
 api_key = os.getenv("SERPAPI_KEY")
 
-search_query = input("Enter search: ")
+niche = input("Enter niche: ")
 
-while search_query == "":
-    search_query = input("Enter search: ")
+while niche == "":
+    niche = input("Enter niche: ")
 
 all_results = []
 start = 0
@@ -22,7 +22,7 @@ MAX_START = 100
 
 while start < MAX_START:
     params = {
-        "q": search_query,
+        "q": niche,
         "engine": "google_maps",
         "ll": "@-26.0082584,26.8077072,8z",
         "hl": "af",
@@ -77,7 +77,7 @@ print(f"Total time elapsed from cleaning: {clean_time_elapsed} minutes")
 # csv file name
 now = datetime.now()
 file_timestamp = now.strftime("%Y-%m-%d_%H-%M")
-filename = f"lead_data_{file_timestamp}.csv"
+filename = f"lead_data_{niche.lower}_{file_timestamp}.csv"
 
 # send csv to reports directory
 folder_name = "reports"
