@@ -25,7 +25,7 @@ def clean_number(number):
         parsed = phonenumbers.parse(str(number), "ZA")
 
         if phonenumbers.is_valid_number(parsed):
-            return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.E164)
+            return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.NATIONAL)
         else:
             return None
     except Exception:
