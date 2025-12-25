@@ -16,6 +16,8 @@ niche = input("Enter niche: ")
 while niche == "":
     niche = input("Enter niche: ")
 
+niche = niche.lower()
+
 all_results = []
 start = 0
 MAX_START = 100
@@ -77,7 +79,7 @@ print(f"Total time elapsed from cleaning: {clean_time_elapsed} minutes")
 # csv file name
 now = datetime.now()
 file_timestamp = now.strftime("%Y-%m-%d_%H-%M")
-filename = f"lead_data_{niche.lower}_{file_timestamp}.csv"
+filename = f"lead_data_{niche}_{file_timestamp}.csv"
 
 # send csv to reports directory
 folder_name = "reports"
