@@ -93,7 +93,7 @@ df.columns = ["Title", "Phone", "Website"]
 df_cleaned = df[df["Phone"].notna()]
 
 df_cleaned = df_cleaned.drop_duplicates()
-df_cleaned = df_cleaned.fillna("None")
+df_cleaned = df_cleaned.dropna()
 
 # send to csv
 df_cleaned.to_csv(file_path, header=False, index=False)

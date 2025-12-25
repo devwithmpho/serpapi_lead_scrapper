@@ -43,14 +43,6 @@ def get_root_domain(url):
         return f"{parsed.scheme}://{parsed.netloc}/{parsed.path}"
     else:
         return f"{parsed.scheme}://{parsed.netloc}"
-
-def isHTTPS(url: str):
-    if not url:
-        return None
-    if url.startswith('https'):
-        return True
-    else:
-        return False
     
 def create_session():
     session = requests.Session()
@@ -91,10 +83,11 @@ def clean_url(url, session):
     if url != None:
         unwrapped_url = unwrap_url(url)
         root_url = get_root_domain(unwrapped_url)
+        load_time = get_loading_time(root_url, session)
         
-        if root_url != None and type(get_loading_time(root_url, session)) == float and get_loading_time(root_url, session) > 3.0:
+        if root_url != None and load_time != None and load_time > 2:
             return root_url
         else:
             return None
     else:
-        return None
+        return "No Website"
