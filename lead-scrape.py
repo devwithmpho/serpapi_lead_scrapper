@@ -1,12 +1,12 @@
 from serpapi import GoogleSearch
-import os
+import os, time
 from dotenv import load_dotenv
 from datetime import datetime
-import time
 import pandas as pd
 
 from utils import clean_number
-from utils import clean_website
+from utils import clean_url
+from utils import create_session
 
 load_dotenv()
 api_key = os.getenv("SERPAPI_KEY")
@@ -53,14 +53,24 @@ while start < MAX_START:
 
 print(f"Total businesses saved: {len(all_results)}")
 
+### Cleaning business data
 details = []
+
+session = create_session()
+
+clean_start = time.time()
 
 for place in all_results:
     title = place.get("title")
     phone = clean_number(place.get("phone"))
-    website = clean_website(place.get("website"))
+    website = clean_url(place.get("website"), session)
 
     details.append([title, phone, website])
+
+clean_end = time.time()
+clean_time_elapsed = round((clean_end - clean_start) / 60, 2)
+
+print(f"Total time elapsed from cleaning: {clean_time_elapsed} minutes")
 
 ##### saving data to a csv file
 
