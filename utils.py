@@ -8,8 +8,11 @@ from urllib3.util.retry import Retry
 SOCIAL_DOMAINS = [
     "www.instagram.com",
     "www.facebook.com",
+    "m.facebook.com",
     "www.tiktok.com",
-    "www.wa.me.com"
+    "wa.me.com",
+    "x.com",
+    "twitter.com"
 ]
 
 ### DATA CLEANING
